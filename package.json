@@ -13,6 +13,7 @@
     "husky:prepare": "husky install"
   },
   "dependencies": {
+    "@prisma/client": "^5.4.2",
     "next": "13.5.5",
     "react": "^18",
     "react-dom": "^18"
