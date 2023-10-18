@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Categories from "./components/categories";
 
 export default function Home() {
   return (
@@ -11,6 +12,10 @@ export default function Home() {
         alt="Até 55% de desconto só esse mês"
         className="h-auto w-full"
       />
+
+      <div className="mt-8">
+        <Categories />
+      </div>
     </section>
   );
 }
