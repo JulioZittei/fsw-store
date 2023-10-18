@@ -5,6 +5,10 @@
       "icon": "LogIn"
     },
     {
+      "title": "Fazer LogOut",
+      "icon": "LogOut"
+    },
+    {
       "title": "Ofertas",
       "icon": "Percent"
     },
