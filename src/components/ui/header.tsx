@@ -5,7 +5,6 @@ import {
   LogInIcon,
   LogOutIcon,
   Menu,
-  MenuIcon,
   PercentIcon,
   ShoppingCart,
 } from "lucide-react";
@@ -39,9 +38,8 @@ const Header = () => {
       <Sheet>
         <SheetTrigger asChild>
           <Button size="icon" variant="outline">
-            <MenuIcon />
+            <Menu />
           </Button>
-          {data.user.name?.split(" ")?.pop()?.[0].toUpperCase()}
         </SheetTrigger>
 
         <SheetContent side="left">
@@ -55,6 +53,7 @@ const Header = () => {
                 <Avatar>
                   <AvatarFallback>
                     {data.user.name?.[0].toUpperCase()}
+                    {data.user.name?.split(" ")?.pop()?.[0].toUpperCase()}
                   </AvatarFallback>
 
                   {data.user.image && <AvatarImage src={data.user.image} />}
