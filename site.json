@@ -1,0 +1,16 @@
+{
+  "menu": [
+    {
+      "title": "Fazer Login",
+      "icon": "LogIn"
+    },
+    {
+      "title": "Ofertas",
+      "icon": "Percent"
+    },
+    {
+      "title": "Catálago",
+      "icon": "ListOrdered"
+    }
+  ]
+}
