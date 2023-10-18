@@ -41,6 +41,7 @@ const Header = () => {
           <Button size="icon" variant="outline">
             <MenuIcon />
           </Button>
+          {data.user.name?.split(" ")?.pop()?.[0].toUpperCase()}
         </SheetTrigger>
 
         <SheetContent side="left">
