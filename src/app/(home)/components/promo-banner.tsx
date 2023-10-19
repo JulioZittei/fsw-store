@@ -6,7 +6,8 @@ const PromoBanner = ({ alt, ...props }: ImageProps) => {
       height={0}
       width={0}
       className="h-auto w-full px-5"
-      sizes="100vw"
+      sizes="(max-width: 1400px) 50vw, 75vw, 100vw"
+      quality={85}
       alt={alt}
       {...props}
     />

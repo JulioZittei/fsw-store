@@ -16,6 +16,9 @@ module.exports = {
       },
     },
     extend: {
+      screens: {
+        xs: { raw: "(max-width: 374px)" },
+      },
       backgroundImage: {
         "category-item-gradient":
           "linear-gradient(45deg, #5033C3 0%, rgba(80, 51, 195, 0.20) 100%);",
