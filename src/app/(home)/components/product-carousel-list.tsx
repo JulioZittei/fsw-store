@@ -29,11 +29,7 @@ const ProductCarouselList = ({ products }: ProductCarouselListProps) => {
       {products.map((product, key) => (
         <SwiperSlide
           key={product.id}
-          className={twMerge(
-            "max-w-[170px] items-center justify-center",
-            key === 0 && "ml-2",
-            key + 1 === products.length && "mr-2",
-          )}
+          className="max-w-[170px] items-center justify-center first:ml-2 last:mr-2"
         >
           <ProductItem
             product={calculateProductTotalPrice(product)}
