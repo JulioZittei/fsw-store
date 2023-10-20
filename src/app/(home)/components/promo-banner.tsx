@@ -1,16 +1,20 @@
+import staticBlurDataUrl from "@/util/staticBlurDataUrl";
 import Image, { ImageProps } from "next/image";
 
 const PromoBanner = ({ alt, ...props }: ImageProps) => {
   return (
-    <Image
-      height={0}
-      width={0}
-      className="h-auto w-full px-5"
-      sizes="(max-width: 1400px) 50vw, 75vw, 100vw"
-      quality={85}
-      alt={alt}
-      {...props}
-    />
+    <div className="px-5">
+      <Image
+        className="h-auto w-full"
+        width={972}
+        height={416}
+        sizes="(min-width: 1080px) 984px, calc(95.26vw - 26px)"
+        quality={95}
+        placeholder="blur"
+        alt={alt}
+        {...props}
+      />
+    </div>
   );
 };
 

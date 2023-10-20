@@ -2,6 +2,7 @@ import { ProductWithTotalPrice } from "@/helpers/product";
 import { ArrowDownIcon } from "lucide-react";
 import Image from "next/image";
 import { Badge } from "./badge";
+import staticBlurDataUrl from "@/util/staticBlurDataUrl";
 
 interface ProductItemProps {
   product: ProductWithTotalPrice;
@@ -12,16 +13,15 @@ const ProductItem = ({ product }: ProductItemProps) => {
     <div className="flex flex-col gap-4">
       <div className="relative flex h-[170px] w-full items-center justify-center rounded-lg bg-accent">
         <Image
+          className="h-auto max-h-[70%] w-auto max-w-[80%] object-cover"
           src={product.imageUrls[0]}
-          height={0}
-          width={0}
-          sizes="100vw"
-          className="h-auto max-h-[70%] w-auto max-w-[80%]"
-          placeholder="empty"
+          width={136}
+          height={119}
+          sizes="136px"
+          quality={95}
+          placeholder="blur"
+          blurDataURL={product.blurDataUrls[0] || staticBlurDataUrl()}
           alt={product.name}
-          style={{
-            objectFit: "contain",
-          }}
         />
 
         {product.discountPercentage > 0 && (

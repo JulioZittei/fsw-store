@@ -1,8 +1,8 @@
 import { Badge } from "@/components/ui/badge";
-import { ProductItem } from "@/components/ui/product-item";
+import { ProductList } from "@/components/ui/product-list";
 import { CATEGORY_ICON } from "@/constants/category-icon";
-import { calculateProductTotalPrice } from "@/helpers/product";
 import { prismaClient } from "@/lib/prisma";
+import dynamicBlurDataUrl from "@/util/dynamicBlurDataUrl";
 
 const CategoryProducts = async ({ params }: any) => {
   const category = await prismaClient.category.findFirst({
@@ -13,6 +13,19 @@ const CategoryProducts = async ({ params }: any) => {
       products: true,
     },
   });
+
+  const products = category?.products || [];
+
+  const productsWithBlurDataUrl = await Promise.all(
+    products.map(async (product) => ({
+      ...product,
+      blurDataUrls: await Promise.all(
+        product.imageUrls.map((image) => dynamicBlurDataUrl(image)),
+      ),
+    })),
+  );
+
+  const productsList = productsWithBlurDataUrl;
 
   if (!category) {
     return null;
@@ -28,14 +41,7 @@ const CategoryProducts = async ({ params }: any) => {
         <h2>{category.name}</h2>
       </Badge>
 
-      <div className="grid grid-cols-2 gap-8 md:grid-cols-3">
-        {category.products.map((product) => (
-          <ProductItem
-            key={product.id}
-            product={calculateProductTotalPrice(product)}
-          />
-        ))}
-      </div>
+      <ProductList products={productsList} />
     </div>
   );
 };

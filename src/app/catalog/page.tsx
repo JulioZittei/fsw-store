@@ -2,9 +2,18 @@ import { Badge } from "@/components/ui/badge";
 import { Shapes } from "lucide-react";
 import { CategoryItem } from "./components/category-item";
 import { prismaClient } from "@/lib/prisma";
+import { CategoryList } from "./components/category-list";
+import dynamicBlurDataUrl from "@/util/dynamicBlurDataUrl";
 
 const CatalogPage = async () => {
   const categories = await prismaClient.category.findMany({});
+
+  const categoriesWithBlurDataUrl = categories.map(async (category) => ({
+    ...category,
+    blurDataUrl: await dynamicBlurDataUrl(category.imageUrl),
+  }));
+
+  const categoriesList = await Promise.all(categoriesWithBlurDataUrl);
 
   return (
     <div className="flex flex-col gap-8 p-5">
@@ -17,13 +26,7 @@ const CatalogPage = async () => {
 
       <div>
         <nav>
-          <ul className="grid grid-cols-2 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {categories.map((category) => (
-              <li key={category.id}>
-                <CategoryItem key={category.id} category={category} />
-              </li>
-            ))}
-          </ul>
+          <CategoryList categories={categoriesList} />
         </nav>
       </div>
     </div>

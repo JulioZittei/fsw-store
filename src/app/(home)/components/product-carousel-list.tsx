@@ -7,15 +7,17 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import { useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { calculateProductTotalPrice } from "@/helpers/product";
+import {
+  ProductWithBlurDataUrl,
+  calculateProductTotalPrice,
+} from "@/helpers/product";
 
-interface ProductListProps {
-  products: Product[];
+interface ProductCarouselListProps {
+  products: ProductWithBlurDataUrl[];
 }
 
-const ProductList = ({ products }: ProductListProps) => {
+const ProductCarouselList = ({ products }: ProductCarouselListProps) => {
   return (
     <Swiper
       spaceBetween={16}
@@ -40,12 +42,7 @@ const ProductList = ({ products }: ProductListProps) => {
         </SwiperSlide>
       ))}
     </Swiper>
-    // <div className="flex w-full gap-4 overflow-x-auto px-5 [&::-webkit-scrollbar]:hidden">
-    //   {products.map((product) => (
-    //     <ProductItem product={product} key={product.id} />
-    //   ))}
-    // </div>
   );
 };
 
-export { ProductList };
+export { ProductCarouselList };

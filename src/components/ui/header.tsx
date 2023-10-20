@@ -21,6 +21,8 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { Separator } from "./separator";
 import Link from "next/link";
+import dynamicBlurDataUrl from "@/util/dynamicBlurDataUrl";
+import { useEffect } from "react";
 
 const Header = () => {
   const { data, status } = useSession();
@@ -35,10 +37,10 @@ const Header = () => {
 
   return (
     <header>
-      <Card className="flex items-center justify-between rounded-none border-0 border-b-[1px] p-[1.875rem]">
+      <Card className="flex items-center justify-between p-[1.875rem]">
         <Sheet>
           <SheetTrigger asChild>
-            <Button size="icon" variant="outline">
+            <Button size="icon" variant="outline" aria-label="Menu">
               <Menu />
             </Button>
           </SheetTrigger>
@@ -69,66 +71,77 @@ const Header = () => {
                 <Separator />
               </div>
             )}
+            <nav>
+              <ul className="mt-4 flex flex-col gap-2">
+                {status === "unauthenticated" && (
+                  <li>
+                    <Button
+                      onClick={handleLoginClick}
+                      variant="outline"
+                      className="w-full justify-start gap-2"
+                    >
+                      <LogInIcon size={16} />
+                      Fazer Login
+                    </Button>
+                  </li>
+                )}
 
-            <div className="mt-4 flex flex-col gap-2">
-              {status === "unauthenticated" && (
-                <Button
-                  onClick={handleLoginClick}
-                  variant="outline"
-                  className="w-full justify-start gap-2"
-                >
-                  <LogInIcon size={16} />
-                  Fazer Login
-                </Button>
-              )}
+                {status === "authenticated" && (
+                  <li>
+                    <Button
+                      onClick={handleLogoutClick}
+                      variant="outline"
+                      className="w-full justify-start gap-2"
+                    >
+                      <LogOutIcon size={16} />
+                      Fazer Logout
+                    </Button>
+                  </li>
+                )}
 
-              {status === "authenticated" && (
-                <Button
-                  onClick={handleLogoutClick}
-                  variant="outline"
-                  className="w-full justify-start gap-2"
-                >
-                  <LogOutIcon size={16} />
-                  Fazer Logout
-                </Button>
-              )}
+                <li>
+                  <SheetClose asChild>
+                    <Link href="/" className="w-full">
+                      <Button
+                        variant="outline"
+                        className="w-full justify-start gap-2"
+                      >
+                        <HomeIcon size={16} />
+                        Início
+                      </Button>
+                    </Link>
+                  </SheetClose>
+                </li>
 
-              <SheetClose asChild>
-                <Link href="/">
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start gap-2"
-                  >
-                    <HomeIcon size={16} />
-                    Início
-                  </Button>
-                </Link>
-              </SheetClose>
+                <li>
+                  <SheetClose asChild>
+                    <Link href="/offers" className="w-full">
+                      <Button
+                        variant="outline"
+                        className="w-full justify-start gap-2"
+                      >
+                        <PercentIcon size={16} />
+                        Ofertas
+                      </Button>
+                    </Link>
+                  </SheetClose>
+                </li>
 
-              <SheetClose asChild>
-                <Link href="/offers">
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start gap-2"
-                  >
-                    <PercentIcon size={16} />
-                    Ofertas
-                  </Button>
-                </Link>
-              </SheetClose>
-
-              <SheetClose asChild>
-                <Link href="/catalog">
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start gap-2"
-                  >
-                    <ListOrderedIcon size={16} />
-                    Catálogo
-                  </Button>
-                </Link>
-              </SheetClose>
-            </div>
+                <li>
+                  <SheetClose asChild>
+                    <Link href="/catalog" className="w-full">
+                      <Button
+                        variant="outline"
+                        className="w-full justify-start gap-2"
+                      >
+                        <ListOrderedIcon size={16} />
+                        Catálogo
+                      </Button>
+                    </Link>
+                  </SheetClose>
+                </li>
+              </ul>
+            </nav>
           </SheetContent>
         </Sheet>
 
@@ -138,7 +151,7 @@ const Header = () => {
           </h1>
         </Link>
 
-        <Button size="icon" variant="outline">
+        <Button size="icon" variant="outline" aria-label="Carrinho de compras">
           <ShoppingCart />
         </Button>
       </Card>

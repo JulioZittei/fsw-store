@@ -5,6 +5,7 @@ declare namespace NodeJS {
     GOOGLE_CLIENT_SECRET: string;
     HOST_URL: string;
     NEXTAUTH_URL: string;
+    NEXT_PUBLIC_HOST_URL: string;
     SECRET: string;
   }
 }
