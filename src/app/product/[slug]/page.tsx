@@ -5,8 +5,9 @@ import {
   ProductWithBlurDataUrl,
   calculateProductTotalPrice,
 } from "@/helpers/product";
-import categories from "@/app/(home)/components/categories";
 import dynamicBlurDataUrl from "@/util/dynamicBlurDataUrl";
+import { SectionTitle } from "@/components/ui/section-title";
+import { ProductCarouselList } from "@/components/ui/product-carousel-list";
 
 interface ProductDetailPageProps {
   params: {
@@ -21,6 +22,19 @@ const ProductDetailPage = async ({
     where: {
       slug,
     },
+    include: {
+      category: {
+        include: {
+          products: {
+            where: {
+              slug: {
+                not: slug,
+              },
+            },
+          },
+        },
+      },
+    },
   });
 
   const imageUrls = product?.imageUrls || [];
@@ -32,7 +46,21 @@ const ProductDetailPage = async ({
     ),
   } as ProductWithBlurDataUrl;
 
+  const products = product?.category.products || [];
+
+  const relatedWithBlurDataUrl = await Promise.all(
+    products.map(async (product) => ({
+      ...product,
+      blurDataUrls: await Promise.all(
+        product.imageUrls.map((image) => dynamicBlurDataUrl(image)),
+      ),
+    })),
+  );
+
+  const relatedList = relatedWithBlurDataUrl;
+
   if (!product) return null;
+
   return (
     <div className="flex flex-col gap-8 pb-8">
       <ProductImages
@@ -44,6 +72,11 @@ const ProductDetailPage = async ({
       <ProductInfo
         product={calculateProductTotalPrice(productWithBlurDataUrl)}
       />
+
+      <div>
+        <SectionTitle>Produtos Recomendados</SectionTitle>
+        <ProductCarouselList products={relatedList} />
+      </div>
     </div>
   );
 };

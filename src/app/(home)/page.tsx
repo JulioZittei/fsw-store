@@ -1,5 +1,5 @@
 import Categories from "./components/categories";
-import { ProductCarouselList } from "./components/product-carousel-list";
+import { ProductCarouselList } from "@/components/ui/product-carousel-list";
 import { prismaClient } from "@/lib/prisma";
 import { SectionTitle } from "@/components/ui/section-title";
 import PromoBanner from "./components/promo-banner";
