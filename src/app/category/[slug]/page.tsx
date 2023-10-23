@@ -4,10 +4,18 @@ import { CATEGORY_ICON } from "@/constants/category-icon";
 import { prismaClient } from "@/lib/prisma";
 import dynamicBlurDataUrl from "@/util/dynamicBlurDataUrl";
 
-const CategoryProducts = async ({ params }: any) => {
+interface CategoryProductsPageProps {
+  params: {
+    slug: string;
+  };
+}
+
+const CategoryProductsPage = async ({
+  params: { slug },
+}: CategoryProductsPageProps) => {
   const category = await prismaClient.category.findFirst({
     where: {
-      slug: params.slug,
+      slug,
     },
     include: {
       products: true,
@@ -37,13 +45,15 @@ const CategoryProducts = async ({ params }: any) => {
         className="w-fit gap-1 border-2 border-primary px-3 py-[0.375rem] text-base uppercase"
         variant="outline"
       >
-        {CATEGORY_ICON[params.slug as keyof typeof CATEGORY_ICON]}
+        {CATEGORY_ICON[slug as keyof typeof CATEGORY_ICON]}
         <h2>{category.name}</h2>
       </Badge>
+
+      <h1 className="sr-only">Os melhores descontos em {category.name}</h1>
 
       <ProductList products={productsList} />
     </div>
   );
 };
 
-export default CategoryProducts;
+export default CategoryProductsPage;

@@ -31,7 +31,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <AuthProvider>
-          <div className="mx-auto w-full max-w-5xl">
+          <div className="mx-auto h-full w-full max-w-5xl">
             <div className="flex h-full flex-col">
               <Header />
               <main className="flex-1">{children}</main>

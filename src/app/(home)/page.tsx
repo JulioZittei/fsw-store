@@ -78,6 +78,8 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col gap-8 py-8">
+      <h1 className="sr-only">Até 55% de desconto só esse mês</h1>
+
       <PromoBanner
         src="/banner-home-01.png"
         priority={true}

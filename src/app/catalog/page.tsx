@@ -24,6 +24,10 @@ const CatalogPage = async () => {
         <Shapes size={16} /> <h2>Catálago</h2>
       </Badge>
 
+      <h1 className="sr-only">
+        Descontos em todas as categorias do nosso site
+      </h1>
+
       <div>
         <nav>
           <CategoryList categories={categoriesList} />
