@@ -2,6 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { DiscountBadge } from "@/components/ui/discount-badge";
 import { ProductWithTotalPrice } from "@/helpers/product";
 import {
   ArrowDownIcon,
@@ -44,10 +45,7 @@ const ProductInfo = ({
           })}
         </p>
         {discountPercentage > 0 && (
-          <Badge className="px-2 py-[2px] ">
-            <ArrowDownIcon size={14} />
-            {discountPercentage}%
-          </Badge>
+          <DiscountBadge>{discountPercentage}</DiscountBadge>
         )}
       </div>
 
