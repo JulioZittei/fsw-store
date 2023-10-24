@@ -1,30 +1,19 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { DiscountBadge } from "@/components/ui/discount-badge";
 import { ProductWithTotalPrice } from "@/helpers/product";
-import {
-  ArrowDownIcon,
-  ArrowLeft,
-  ArrowRight,
-  Minus,
-  Plus,
-  Truck,
-} from "lucide-react";
-import { useState } from "react";
+import { CartContext } from "@/providers/cart";
+import { Minus, Plus, Truck } from "lucide-react";
+import { useContext, useState } from "react";
 
 interface ProductInfoProps {
-  product: Pick<
-    ProductWithTotalPrice,
-    "name" | "price" | "description" | "discountPercentage" | "totalPrice"
-  >;
+  product: ProductWithTotalPrice;
 }
 
-const ProductInfo = ({
-  product: { name, price, totalPrice, description, discountPercentage },
-}: ProductInfoProps) => {
+const ProductInfo = ({ product }: ProductInfoProps) => {
   const [quantity, setQuantity] = useState(1);
+  const { addProductToCart } = useContext(CartContext);
 
   const handleDecreaseQuantityClick = () => {
     setQuantity((prev) => (prev === 1 ? prev : prev - 1));
@@ -34,26 +23,30 @@ const ProductInfo = ({
     setQuantity((prev) => (prev === 99 ? prev : prev + 1));
   };
 
+  const handleAddToCart = () => {
+    addProductToCart({ ...product, quantity });
+  };
+
   return (
     <div className="flex flex-col px-5">
-      <h1 className="text-lg">{name}</h1>
+      <h1 className="text-lg">{product.name}</h1>
       <div className="flex items-center gap-2">
         <p>
-          {totalPrice.toLocaleString("pt-BR", {
+          {product.totalPrice.toLocaleString("pt-BR", {
             currency: "BRL",
             style: "currency",
           })}
         </p>
-        {discountPercentage > 0 && (
-          <DiscountBadge>{discountPercentage}</DiscountBadge>
+        {product.discountPercentage > 0 && (
+          <DiscountBadge>{product.discountPercentage}</DiscountBadge>
         )}
       </div>
 
-      {discountPercentage > 0 && (
+      {product.discountPercentage > 0 && (
         <p className="text-sm opacity-75">
           De:{" "}
           <span className="line-through">
-            {Number(price).toLocaleString("pt-BR", {
+            {Number(product.price).toLocaleString("pt-BR", {
               currency: "BRL",
               style: "currency",
             })}
@@ -83,10 +76,10 @@ const ProductInfo = ({
 
       <div className="mt-8 flex flex-col gap-3">
         <h2 className="font-bold">Descrição</h2>
-        <p className="text-justify text-sm opacity-60">{description}</p>
+        <p className="text-justify text-sm opacity-60">{product.description}</p>
       </div>
 
-      <Button className="mt-8 font-bold uppercase">
+      <Button className="mt-8 font-bold uppercase" onClick={handleAddToCart}>
         Adicionar ao carrinho
       </Button>
 
