@@ -1,13 +1,32 @@
-import { CartProduct } from "@/providers/cart";
+import { CartContext, CartProduct } from "@/providers/cart";
 import Image from "next/image";
 import { Button } from "./button";
 import { Minus, Plus, Trash } from "lucide-react";
+import { useContext } from "react";
 
 interface CartItemProps {
   product: CartProduct;
 }
 
 const CartItem = ({ product }: CartItemProps) => {
+  const {
+    increaseProductQuantity,
+    decreaseProductQuantity,
+    removeProductFromCart,
+  } = useContext(CartContext);
+
+  const handleIncreaseProductQuantity = () => {
+    increaseProductQuantity(product.id);
+  };
+
+  const handleDecreaseProductQuantity = () => {
+    decreaseProductQuantity(product.id);
+  };
+
+  const handleRemoveProductFromCart = () => {
+    removeProductFromCart(product.id);
+  };
+
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-4">
@@ -45,19 +64,33 @@ const CartItem = ({ product }: CartItemProps) => {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button size="icon" variant="outline" className="h-8 w-8">
+          <Button
+            size="icon"
+            variant="outline"
+            className="h-8 w-8"
+            onClick={handleDecreaseProductQuantity}
+          >
             <Minus size={16} />
           </Button>
 
           <span className="text-xs">{product.quantity}</span>
 
-          <Button size="icon" variant="outline" className="h-8 w-8">
+          <Button
+            size="icon"
+            variant="outline"
+            className="h-8 w-8"
+            onClick={handleIncreaseProductQuantity}
+          >
             <Plus size={16} />
           </Button>
         </div>
       </div>
 
-      <Button size="icon" variant="outline">
+      <Button
+        size="icon"
+        variant="outline"
+        onClick={handleRemoveProductFromCart}
+      >
         <Trash size={16} />
       </Button>
     </div>
