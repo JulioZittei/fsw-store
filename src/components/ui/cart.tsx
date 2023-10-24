@@ -3,9 +3,11 @@ import { ShoppingCart } from "lucide-react";
 import { useContext } from "react";
 import { CartContext } from "@/providers/cart";
 import { CartItem } from "./cart-item";
+import { Separator } from "./separator";
 
 const Cart = () => {
-  const { products } = useContext(CartContext);
+  const { products, subTotal, totalPrice, totalDiscount } =
+    useContext(CartContext);
 
   return (
     <div className="flex flex-col gap-8">
@@ -18,12 +20,61 @@ const Cart = () => {
       </Badge>
 
       <ul className="flex flex-col gap-5">
-        {products.map((product) => (
-          <li key={product.id}>
-            <CartItem product={product} />
-          </li>
-        ))}
+        {products.length > 0 ? (
+          products.map((product) => (
+            <li key={product.id}>
+              <CartItem product={product} />
+            </li>
+          ))
+        ) : (
+          <p className="text-center font-semibold">Carrinho vazio =[</p>
+        )}
       </ul>
+
+      <div className="flex flex-col gap-3">
+        <Separator />
+
+        <div className="flex items-center justify-between text-xs">
+          <p>Subtotal</p>
+          <p>
+            {subTotal.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            })}
+          </p>
+        </div>
+
+        <Separator />
+
+        <div className="flex items-center justify-between text-xs">
+          <p>Entrega</p>
+          <p className="uppercase">Grátis</p>
+        </div>
+
+        <Separator />
+
+        <div className="flex items-center justify-between text-xs">
+          <p>Total de Desconto</p>
+          <p>
+            {totalDiscount.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            })}
+          </p>
+        </div>
+
+        <Separator />
+
+        <div className="flex items-center justify-between text-sm">
+          <p className="font-bold">Total</p>
+          <p className="font-bold">
+            {totalPrice.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            })}
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
