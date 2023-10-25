@@ -48,57 +48,59 @@ const Cart = () => {
         </ScrollArea>
       </div>
 
-      <div className="flex flex-col gap-3">
-        <Separator />
+      {products.length > 0 && (
+        <div className="flex flex-col gap-3">
+          <Separator />
 
-        <div className="flex items-center justify-between text-xs">
-          <p>Subtotal</p>
-          <p>
-            {subTotal.toLocaleString("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            })}
-          </p>
+          <div className="flex items-center justify-between text-xs">
+            <p>Subtotal</p>
+            <p>
+              {subTotal.toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              })}
+            </p>
+          </div>
+
+          <Separator />
+
+          <div className="flex items-center justify-between text-xs">
+            <p>Entrega</p>
+            <p className="uppercase">Grátis</p>
+          </div>
+
+          <Separator />
+
+          <div className="flex items-center justify-between text-xs">
+            <p>Descontos</p>
+            <p>
+              {totalDiscount.toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              })}
+            </p>
+          </div>
+
+          <Separator />
+
+          <div className="flex items-center justify-between text-sm">
+            <p className="font-bold">Total</p>
+            <p className="font-bold">
+              {totalPrice.toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              })}
+            </p>
+          </div>
+
+          <Button
+            className="mt-7 font-bold uppercase"
+            onClick={handleFinishPurchaseClick}
+          >
+            Finalizar compra
+          </Button>
         </div>
-
-        <Separator />
-
-        <div className="flex items-center justify-between text-xs">
-          <p>Entrega</p>
-          <p className="uppercase">Grátis</p>
-        </div>
-
-        <Separator />
-
-        <div className="flex items-center justify-between text-xs">
-          <p>Descontos</p>
-          <p>
-            {totalDiscount.toLocaleString("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            })}
-          </p>
-        </div>
-
-        <Separator />
-
-        <div className="flex items-center justify-between text-sm">
-          <p className="font-bold">Total</p>
-          <p className="font-bold">
-            {totalPrice.toLocaleString("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            })}
-          </p>
-        </div>
-
-        <Button
-          className="mt-7 font-bold uppercase"
-          onClick={handleFinishPurchaseClick}
-        >
-          Finalizar compra
-        </Button>
-      </div>
+      )}
     </div>
   );
 };
