@@ -165,7 +165,7 @@ const Header = () => {
               className="relative"
             >
               <ShoppingCart />
-              <Badge className="absolute right-[-8px] top-[-4px] px-2 py-1">
+              <Badge className="absolute right-[-8px] top-[-4px] px-2 py-[1px] text-[0.625rem]">
                 {cartSize}
               </Badge>
             </Button>
