@@ -1,5 +1,6 @@
 "use client";
 import {
+  ArrowDownIcon,
   HomeIcon,
   ListOrderedIcon,
   LogInIcon,
@@ -22,9 +23,14 @@ import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { Separator } from "./separator";
 import Link from "next/link";
 import { Cart } from "./cart";
+import { Badge } from "./badge";
+import { useContext } from "react";
+import { CartContext } from "@/providers/cart";
+import { twMerge } from "tailwind-merge";
 
 const Header = () => {
   const { data, status } = useSession();
+  const { cartSize } = useContext(CartContext);
 
   const handleLoginClick = async () => {
     await signIn();
@@ -156,8 +162,12 @@ const Header = () => {
               size="icon"
               variant="outline"
               aria-label="Carrinho de compras"
+              className="relative"
             >
               <ShoppingCart />
+              <Badge className="absolute right-[-8px] top-[-4px] px-2 py-1">
+                {cartSize}
+              </Badge>
             </Button>
           </SheetTrigger>
 

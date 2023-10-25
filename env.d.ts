@@ -6,6 +6,8 @@ declare namespace NodeJS {
     HOST_URL: string;
     NEXTAUTH_URL: string;
     NEXT_PUBLIC_HOST_URL: string;
+    NEXT_PUBLIC_STRIPE_KEY: string;
     SECRET: string;
+    STRIPE_SECRET_KEY: string;
   }
 }
