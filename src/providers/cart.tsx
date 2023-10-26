@@ -34,13 +34,11 @@ const CartContext = createContext<CartContext>({
 });
 
 const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [products, setProducts] = useState<CartProduct[]>(
-    JSON.parse(localStorage.getItem(CART_KEY) || "[]"),
-  );
+  const [products, setProducts] = useState<CartProduct[]>([]);
 
-  // useEffect(() => {
-  //   setProducts(JSON.parse(localStorage.getItem(CART_KEY) || "[]"));
-  // }, []);
+  useEffect(() => {
+    setProducts(JSON.parse(localStorage.getItem(CART_KEY) || "[]"));
+  }, []);
 
   useEffect(() => {
     localStorage.setItem(CART_KEY, JSON.stringify(products));
