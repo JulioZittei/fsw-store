@@ -10,7 +10,8 @@
     "style": "prettier --check src/**/*.tsx src/**/*.ts",
     "lint:fix": "eslint ./src --ext '.ts','.tsx' --fix",
     "style:fix": "prettier --write --no-error-on-unmatched-pattern src/**/*.tsx src/**/*.ts",
-    "husky:prepare": "husky install"
+    "husky:prepare": "husky install",
+    "prepare": "prisma generate"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
