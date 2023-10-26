@@ -26,7 +26,6 @@ import { Cart } from "./cart";
 import { Badge } from "./badge";
 import { useContext } from "react";
 import { CartContext } from "@/providers/cart";
-import { twMerge } from "tailwind-merge";
 
 const Header = () => {
   const { data, status } = useSession();
