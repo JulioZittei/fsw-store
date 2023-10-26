@@ -120,7 +120,7 @@ const Header = () => {
 
                 <li>
                   <SheetClose asChild>
-                    <Link href="/offers" className="w-full">
+                    <Link href="/deals" className="w-full">
                       <Button
                         variant="outline"
                         className="w-full justify-start gap-2"

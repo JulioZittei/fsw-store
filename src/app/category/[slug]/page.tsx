@@ -41,12 +41,9 @@ const CategoryProductsPage = async ({
 
   return (
     <div className="flex flex-col gap-8 p-5">
-      <Badge
-        className="w-fit gap-1 border-2 border-primary px-3 py-[0.375rem] text-base uppercase"
-        variant="outline"
-      >
+      <Badge variant="heading">
         {CATEGORY_ICON[slug as keyof typeof CATEGORY_ICON]}
-        <h2>{category.name}</h2>
+        {category.name}
       </Badge>
 
       <h1 className="sr-only">Os melhores descontos em {category.name}</h1>
