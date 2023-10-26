@@ -23,9 +23,9 @@ const Cart = () => {
       return;
     }
 
-    await createOrder(products, data.user.id as string);
+    const order = await createOrder(products, data.user.id as string);
 
-    const checkout = await createCheckout(products);
+    const checkout = await createCheckout(products, order.id);
     const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY);
 
     stripe?.redirectToCheckout({
