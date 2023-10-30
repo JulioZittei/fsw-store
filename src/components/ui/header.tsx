@@ -6,6 +6,7 @@ import {
   LogInIcon,
   LogOutIcon,
   Menu,
+  PackageSearch,
   PercentIcon,
   ShoppingCart,
 } from "lucide-react";
@@ -18,25 +19,33 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "./sheet";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { Separator } from "./separator";
 import Link from "next/link";
 import { Cart } from "./cart";
 import { Badge } from "./badge";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { CartContext } from "@/providers/cart";
+import { useRouter, usePathname } from "next/navigation";
 
 const Header = () => {
   const { data, status } = useSession();
   const { cartSize } = useContext(CartContext);
+  const { push } = useRouter();
+  const currentPath = usePathname();
+  console.log(data);
 
   const handleLoginClick = async () => {
-    await signIn();
+    push(`/auth/signin?callbackUrl=${encodeURIComponent(currentPath)}`);
   };
 
   const handleLogoutClick = async () => {
-    await signOut();
+    console.log(currentPath);
+    const data = await signOut({
+      redirect: false,
+    });
+    push(currentPath);
   };
 
   return (
@@ -79,28 +88,48 @@ const Header = () => {
               <ul className="mt-4 flex flex-col gap-2">
                 {status === "unauthenticated" && (
                   <li>
-                    <Button
-                      onClick={handleLoginClick}
-                      variant="outline"
-                      className="w-full justify-start gap-2"
-                    >
-                      <LogInIcon size={16} />
-                      Fazer Login
-                    </Button>
+                    <SheetClose asChild>
+                      <Button
+                        onClick={handleLoginClick}
+                        variant="outline"
+                        className="w-full justify-start gap-2"
+                      >
+                        <LogInIcon size={16} />
+                        Fazer Login
+                      </Button>
+                    </SheetClose>
                   </li>
                 )}
 
                 {status === "authenticated" && (
-                  <li>
-                    <Button
-                      onClick={handleLogoutClick}
-                      variant="outline"
-                      className="w-full justify-start gap-2"
-                    >
-                      <LogOutIcon size={16} />
-                      Fazer Logout
-                    </Button>
-                  </li>
+                  <>
+                    <li>
+                      <SheetClose asChild>
+                        <Link href="/orders" className="w-full">
+                          <Button
+                            variant="outline"
+                            className="w-full justify-start gap-2"
+                          >
+                            <PackageSearch size={16} />
+                            Meus Pedidos
+                          </Button>
+                        </Link>
+                      </SheetClose>
+                    </li>
+
+                    <li>
+                      <SheetClose asChild>
+                        <Button
+                          onClick={handleLogoutClick}
+                          variant="outline"
+                          className="w-full justify-start gap-2"
+                        >
+                          <LogOutIcon size={16} />
+                          Fazer Logout
+                        </Button>
+                      </SheetClose>
+                    </li>
+                  </>
                 )}
 
                 <li>

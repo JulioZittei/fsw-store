@@ -5,6 +5,7 @@ import { Header } from "@/components/ui/header";
 import { AuthProvider } from "@/providers/auth";
 import { Footer } from "@/components/ui/footer";
 import { CartProvider } from "@/providers/cart";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 const baseUrl = process.env.HOST_URL;
@@ -40,6 +41,7 @@ export default async function RootLayout({
                 <Footer />
               </div>
             </div>
+            <Toaster />
           </CartProvider>
         </AuthProvider>
       </body>

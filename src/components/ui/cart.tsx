@@ -10,11 +10,11 @@ import { createCheckout } from "@/actions/checkout";
 import { loadStripe } from "@stripe/stripe-js";
 import { useSession } from "next-auth/react";
 import { signIn } from "next-auth/react";
-import { createOrder } from "@/actions/order";
+import { createOrder, updateOrderWith } from "@/actions/order";
 
 const Cart = () => {
   const { data } = useSession();
-  const { products, subTotal, totalPrice, totalDiscount } =
+  const { products, subTotal, totalPrice, totalDiscount, clearCart } =
     useContext(CartContext);
 
   const handleFinishPurchaseClick = async () => {
@@ -24,13 +24,16 @@ const Cart = () => {
     }
 
     const order = await createOrder(products, data.user.id as string);
-
     const checkout = await createCheckout(products, order.id);
+    await updateOrderWith(order.id, checkout.id);
+
     const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY);
 
     stripe?.redirectToCheckout({
       sessionId: checkout.id,
     });
+
+    clearCart();
   };
 
   return (
